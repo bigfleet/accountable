@@ -1,6 +1,3 @@
-Factory.define do
-	
-	factory :account do
-	end
+Factory.define :account do
   
 end
