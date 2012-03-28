@@ -15,4 +15,8 @@ gem "jquery-rails"
 
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
-gem 'rspec-rails'
+group :test do
+  gem 'rspec-rails', "~> 2.9.0"
+  gem 'factory_girl', "~> 3.0.0"
+  gem 'factory_girl_rails', "~> 3.0.0"
+end
