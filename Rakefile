@@ -20,10 +20,17 @@ RDoc::Task.new(:rdoc) do |rdoc|
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
 
+begin
+  require 'rspec/core/rake_task'
+  RSpec::Core::RakeTask.new(:spec)
+  task :default => :spec
+rescue LoadError => ls
+  puts "rspec failing to load."
+  exit(1)
+end
+
 APP_RAKEFILE = File.expand_path("../spec/dummy/Rakefile", __FILE__)
 load 'rails/tasks/engine.rake'
-
-task :default => :spec
 
 Bundler::GemHelper.install_tasks
 
