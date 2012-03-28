@@ -1,4 +1,4 @@
-class Accountable::Credit < Accountable::Entry
+class Credit < Entry
 
   validate :require_debit
   validate :sign_convention

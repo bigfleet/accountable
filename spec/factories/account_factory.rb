@@ -1,6 +1,6 @@
 FactoryGirl.define do
 
-  factory :account, :class => "Accountable::Account" do
+  factory :account do
   end
   
 end

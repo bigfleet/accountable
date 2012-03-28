@@ -1,4 +1,4 @@
-class Accountable::Debit < Accountable::Entry
+class Debit < Entry
   validate :sign_convention
   has_one :credit, :through => :transaction
 

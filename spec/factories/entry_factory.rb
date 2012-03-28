@@ -1,9 +1,9 @@
 FactoryGirl.define do
 
-  factory :credit, :class => "Accountable::Credit" do
+  factory :credit do
   end
   
-  factory :debit, :class => "Accountable::Debit" do
+  factory :debit do
   end
 
 end

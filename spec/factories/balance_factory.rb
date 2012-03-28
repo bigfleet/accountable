@@ -1,6 +1,6 @@
 FactoryGirl.define do
 
-  factory :balance, :class => "Accountable::Balance" do
+  factory :balance do
   end
   
 end

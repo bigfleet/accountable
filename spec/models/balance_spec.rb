@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Accountable::Balance do
+describe Balance do
 
   subject { build(:balance) }
 

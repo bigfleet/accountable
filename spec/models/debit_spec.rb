@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Accountable::Debit do
+describe Debit do
 
   subject { build(:debit) }
 

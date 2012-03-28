@@ -1,6 +1,4 @@
-class Accountable::Account < ActiveRecord::Base 
-
-	self.table_name = "accounts"
+class Account < ActiveRecord::Base 
 
   has_many :balances
 

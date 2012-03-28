@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Accountable::Account do
+describe Account do
 
   subject { build(:account) }
 

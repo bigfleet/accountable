@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Accountable::Credit do
+describe Credit do
 
   subject { build(:credit) }
 

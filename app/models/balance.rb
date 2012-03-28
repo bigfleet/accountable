@@ -1,6 +1,4 @@
-class Accountable::Balance < ActiveRecord::Base
-
-  self.table_name = "balances"
+class Balance < ActiveRecord::Base
 
   belongs_to :account
   validates_presence_of :account, :evaluated_at, :balance
