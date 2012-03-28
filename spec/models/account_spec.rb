@@ -1,9 +1,11 @@
 require 'spec_helper'
 
-describe "Account" do
+describe Accountable::Account do
 
-  it "should find an account" do
-    lambda{ Accountable::Account }.should_not raise_error
+  let(:account) { Factory(:account) }
+
+  it "should return a valid account from the factory" do
+    account.should be_valid
   end
 	
 end
