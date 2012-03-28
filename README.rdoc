@@ -1,3 +1,11 @@
 = Accountable
 
 This project rocks and uses MIT-LICENSE.
+
+== Installation
+
+Gemfile
+bundle install
+rails g accountable:migrations
+rake db:migrate
+

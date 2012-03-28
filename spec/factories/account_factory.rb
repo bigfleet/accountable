@@ -1,3 +1,3 @@
-Factory.define :account, :class => "Accountable::Account" do
+FactoryGirl.define :account, :class => "Accountable::Account" do
   
 end
