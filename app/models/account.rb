@@ -1,6 +1,7 @@
 class Account < ActiveRecord::Base 
 
   has_many :balances
+  validate :no_direct_subclass
 
   class << self
     attr_accessor :owner_type
@@ -31,5 +32,13 @@ private
     errors.add_to_base "owner must be an #{self.class.owner_type}" if
       self.class.owner_type and !(owner.is_a? self.class.owner_type)
   end
+
+  def no_direct_subclass
+    # FIXME -- refactor Account as a mixin instead of using STI
+    msg = "Record must not be an Account of a direct subclass of it. " +
+          "Use the DetailAccount or SummaryAccount class instead."
+    known_classes = ["SummaryAccount", "DetailAccount"].include?(self.class.name)
+    errors.add :base, msg unless known_classes
+  end  
 	
 end

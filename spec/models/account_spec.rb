@@ -1,8 +1,16 @@
 require 'spec_helper'
 
-describe Account do
+describe DetailAccount do
 
-  subject { build(:account) }
+  subject { build(:detail_account) }
+
+  it { should be_valid }
+	
+end
+
+describe SummaryAccount do
+
+  subject { build(:summary_account) }
 
   it { should be_valid }
 	
