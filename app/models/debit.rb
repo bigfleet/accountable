@@ -3,7 +3,7 @@ class Debit < Entry
   has_one :credit, :through => :transaction
 
   def sign_convention
-    errors.add_to_base("Debit must be non-positive") unless amount <= 0
+    errors.add(:base, "Debit must be non-positive") unless amount <= 0
   end
 
   def balanced?
