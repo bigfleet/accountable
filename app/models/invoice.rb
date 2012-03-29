@@ -19,12 +19,12 @@ class Invoice < ActiveRecord::Base
   end
 
   def close
-    self.open = false
+    self.closed = false
     save!
   end
 
-  def closed?
-    !open
+  def open?
+    !closed?
   end
 
   def paid?

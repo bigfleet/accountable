@@ -17,7 +17,7 @@ private
   end
 
   def correct_account
-    errors.add_to_line_item "is applied to the wrong account" unless
+    errors.add(:base, "Line item is applied to the wrong account") unless
       line_item.detail_account == invoice.buyer_account
   end
 
