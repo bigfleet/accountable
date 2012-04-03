@@ -68,18 +68,18 @@ describe DetailAccount do
       end
 
     end
-
-    describe "finding previous balances" do
-
-      it "should find the most recent balance before a given date" do
-        day_b4 = create(:balance, :account => detail_account, :evaluated_at => 2.days.ago)
-        yesterday = create(:balance, :account => detail_account, :evaluated_at => 1.day.ago)
-        detail_account.balance_before(Date.today).should == yesterday
-      end
-    end
-
   end
 	
+  describe "finding previous balances" do
+
+    it "should find the most recent balance before a given date" do
+      day_b4 = create(:balance, :account => detail_account, :evaluated_at => 2.days.ago)
+      yesterday = create(:balance, :account => detail_account, :evaluated_at => 1.day.ago)
+      detail_account.balance_before(Date.today).should == yesterday
+    end
+  end
+
+  it "should spec owned_by once that's understood"
 end
 
 describe SummaryAccount do
@@ -87,5 +87,11 @@ describe SummaryAccount do
   subject { build(:summary_account) }
 
   it { should be_valid }
+
+  it "should not be able to reference itself" do
+    sa = build(:summary_account)
+    sa.accounts << sa
+    sa.should_not be_valid
+  end
 	
 end

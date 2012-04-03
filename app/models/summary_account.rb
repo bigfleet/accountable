@@ -5,7 +5,7 @@ class SummaryAccount < Account
 
 private
   def no_recursion
-    errors.add_to_base "SummaryAccount can't reference self" if
+    errors.add(:base, "Summary account cannot summarize itself") if
       accounts.include? self
   end
 end
