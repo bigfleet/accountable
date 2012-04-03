@@ -7,6 +7,12 @@ class Balance < ActiveRecord::Base
     super or self.balance = calculate_balance
   end
 
+  def readonly?
+    !new_record?
+  end
+
+private
+
   def calculate_balance
     entries.inject(previous_balance) {|balance, entry| balance + entry.amount}
   end
@@ -19,11 +25,6 @@ class Balance < ActiveRecord::Base
     previous ? previous.balance : 0
   end
 
-  def readonly?
-    !new_record?
-  end
-
-private
   def entries
     account.entries.find(:all, :conditions => entry_conditions,
                                  :joins => :transaction)
