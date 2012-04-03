@@ -14,7 +14,7 @@ class Account < ActiveRecord::Base
   end
 
   def balance_at(date)
-    balance = Balance.find_by_account_id_and_evaluated_at(id, date)
+    balance = balances.where(:evaluated_at => date).first
     balance ||= Balance.new(:account => self, :evaluated_at => date)
   end
 

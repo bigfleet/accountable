@@ -30,4 +30,10 @@ RSpec.configure do |config|
   # automatically. This will be the default behavior in future versions of
   # rspec-rails.
   config.infer_base_class_for_anonymous_controllers = false
+
+  # Allow tagging specs ':focused => true' to run a subset of specs
+  # with rake spec 
+  config.filter_run :focused => true
+  config.run_all_when_everything_filtered = true
+  config.alias_example_to :fit, :focused => true
 end

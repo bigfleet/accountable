@@ -7,10 +7,10 @@ class BlankTransaction
   end
 
   def to(account_to, args = {})
-    args.merge!( :account_from => account_from,
+    Transaction.create(args.merge( 
+                  :account_from => @account_from,
                  :account_to => account_to,
-                 :amount => amount )
-    Transaction.create args
+                 :amount => @amount ))
   end
 
 end
