@@ -24,7 +24,7 @@ describe DetailAccount do
       balance.balance.should == -10.00
     end
 
-    it "should be decremented with a credit" do
+    it "should be decremented with a debit" do
       balance = detail_account.balance_at(Date.today)
       balance.should_not be_nil
       balance.should_not be_valid
