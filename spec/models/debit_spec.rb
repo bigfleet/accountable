@@ -21,6 +21,16 @@ describe Debit do
       }.should raise_error(ActiveRecord::RecordNotSaved)
     end
 
+    it "must require an encompassing transaction" do
+      debit.transaction = nil
+      debit.should_not be_valid
+    end
+
+    it "must require an associated detail account" do
+      debit.detail_account = nil
+      debit.should_not be_valid
+    end
+
   end  
 
   it "should be balanced by default" do

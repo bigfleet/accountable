@@ -25,6 +25,16 @@ describe Credit do
       credit.transaction.debit.amount = -20.00
       credit.should_not be_valid
     end
+
+    it "must require an encompassing transaction" do
+      credit.transaction = nil
+      credit.should_not be_valid
+    end
+
+    it "must require an associated detail account" do
+      credit.detail_account = nil
+      credit.should_not be_valid
+    end
   end
 	
 end
