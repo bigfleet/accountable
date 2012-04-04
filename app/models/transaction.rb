@@ -1,8 +1,8 @@
 class Transaction < ActiveRecord::Base
   has_one :debit
   has_one :credit
-  has_one :credited_account, :class_name => 'DetailAccount', :through => :credit
-  has_one :debited_account, :class_name => 'DetailAccount', :through => :debit
+  has_one :credited_account, :through => :credit, :source => :detail_account
+  has_one :debited_account, :through => :debit, :source => :detail_account
   belongs_to :auxilliary_model, :polymorphic => true
 
   validates_presence_of :description, :account_from, :account_to, :amount

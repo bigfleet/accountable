@@ -16,6 +16,7 @@ class Invoice < ActiveRecord::Base
       line.save!
     end
     invoice.close
+    invoice
   end
 
   def close
@@ -61,11 +62,11 @@ class Invoice < ActiveRecord::Base
 
 private
   def self.check_accounts(entries)
-    accounts = {}
+    accounts, last_accounts = {}, {}
     entries.each do |entry|
       accounts = get_accounts entry
       raise ArgumentError, "All entries must involve the same accounts" unless
-        accounts = last_accounts or last_accounts.nil?
+        last_accounts.empty? || accounts == last_accounts
       last_accounts = accounts
     end
     accounts
@@ -73,8 +74,8 @@ private
 
   def self.get_accounts(entry)
     buyer = entry.detail_account
-    seller = entry.transaction.debit_account
-    seller = entry.transaction.credit_account if seller == buyer
+    seller = entry.transaction.debited_account
+    seller = entry.transaction.credited_account if seller == buyer
     {:seller => seller, :buyer => buyer}
   end
 
