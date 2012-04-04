@@ -43,9 +43,91 @@ describe Invoice do
   end
 
   describe "net and payment calculations" do
+
+    before(:each) do
+      t = create(:transaction)
+      buyer, seller = t.debited_account, t.credited_account
+      t2 = buyer.transfer(14.99).to(seller, :description => "Second item")
+      @i = Invoice.build([t.credit, t2.credit])
+    end
+
+    it "should calculate amount owed as a proper sum" do
+      @i.amount_billed.should be_within(0.001).of(24.99)
+    end
+
+    it "should not be paid" do
+      @i.should_not be_paid
+    end
+
+    it "should reflect no payments on creation" do
+      @i.amount_paid.should be_within(0.001).of(0)
+    end
+
+    it "should indicate payment due in full" do
+      @i.amount_billed.should == @i.amount_owed
+    end
+
   end
 
   describe "paying" do
+
+    before(:each) do
+      t = create(:transaction)
+      buyer, seller = t.debited_account, t.credited_account
+      t2 = buyer.transfer(14.99).to(seller, :description => "Second item")
+      @i = Invoice.build([t.credit, t2.credit])
+    end
+
+    describe "in full" do
+
+      before(:each) do
+        @i.pay_in_full
+      end
+
+      it "should not effect the amount billed" do
+        @i.amount_billed.should be_within(0.001).of(24.99)
+      end
+
+      it "should indicate full payment" do
+        @i.should be_paid
+      end
+
+      it "should calculate total payment" do
+        @i.amount_paid.should be_within(0.001).of(24.99)
+      end
+
+      it "should indicate payment due in full" do
+        @i.amount_owed.should be_within(0.001).of(0)
+      end
+
+    end
+
+    describe "in part" do
+
+      before(:each) do
+        @i.pay(4.99)
+        @i.pay(5.00)
+      end
+
+      it "should not effect the amount billed" do
+        @i.amount_billed.should be_within(0.001).of(24.99)
+      end
+
+      it "should not indicate full payment" do
+        @i.should_not be_paid
+      end
+
+      it "should calculate total payment" do
+        @i.amount_paid.should be_within(0.001).of(9.99)
+      end
+
+      it "should indicate some payment due" do
+        @i.amount_owed.should be_within(0.001).of(15.00)
+      end
+
+
+    end
+
   end
 
 end
