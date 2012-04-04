@@ -8,9 +8,9 @@ class Statement
   end
 
   def entries
-    account.entries.find :all, :conditions => entry_conditions,
-                                 :joins => :transaction,
-                                 :order => "created_at ASC"
+    account.entries.where(entry_conditions).
+                    joins(:transaction).
+                    order("created_at ASC")
   end
 
   def start_balance

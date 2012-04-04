@@ -125,7 +125,6 @@ describe Invoice do
         @i.amount_owed.should be_within(0.001).of(15.00)
       end
 
-
     end
 
   end
