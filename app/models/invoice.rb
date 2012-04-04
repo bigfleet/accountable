@@ -19,8 +19,7 @@ class Invoice < ActiveRecord::Base
   end
 
   def close
-    self.closed = false
-    save!
+    update_attribute(:closed, true)
   end
 
   def open?
