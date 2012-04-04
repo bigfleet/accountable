@@ -10,16 +10,6 @@ class Transaction < ActiveRecord::Base
 
   attr_accessor :account_from, :account_to, :amount
 
-  def self.belongs_to_auxilliary_model(model)
-    klass = model.to_s.classify
-    belongs_to klass.underscore.to_sym, :foreign_key => :auxilliary_model_id
-  end
-
-  def self.required_auxilliary_model(model)
-    belongs_to_auxilliary_model(model)
-    validates_presence_of model.to_s.classify.underscore.to_sym
-  end
-
   def completed?
     !debit.nil? and !credit.nil?
   end
@@ -58,7 +48,7 @@ private
   end
 
   def sufficient_funds
-    sufficient = account_from && account_from.current_balance >= amount
+    sufficient = account_from && account_from.current_balance.balance >= amount
     errors.add :base, "Insufficient funds in debit account" unless sufficient
   end
 end
