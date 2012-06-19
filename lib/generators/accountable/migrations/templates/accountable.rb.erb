@@ -8,7 +8,7 @@ class CreateAccountableModels < ActiveRecord::Migration
     end
     add_index :accounts, [:owner_id, :owner_type]
 
-    create_table :account_joins do |t|
+    create_table :account_joins, :id => false do |t|
       t.integer :detail_account_id, :references => :accounts
       t.integer :summary_account_id, :references => :accounts
     end
