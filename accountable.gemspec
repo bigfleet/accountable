@@ -7,11 +7,11 @@ require "accountable/version"
 Gem::Specification.new do |s|
   s.name        = "accountable"
   s.version     = Accountable::VERSION
-  s.authors     = ["TODO: Your name"]
-  s.email       = ["TODO: Your email"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of Accountable."
-  s.description = "TODO: Description of Accountable."
+  s.authors     = ["Jim Van Fleet", "Jay McAliley"]
+  s.email       = ["jim@jimvanfleet.com"]
+  s.homepage    = "http://bigfleet.github.com/accountable"
+  s.summary     = "Flexible double-entry accounting engine for Rails apps"
+  s.description = "Double-entry accounting issues credits and debits, calculates balances, allows for summary accounts and more."
 
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
 
