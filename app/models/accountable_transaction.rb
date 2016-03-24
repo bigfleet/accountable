@@ -1,4 +1,4 @@
-class Transaction < ActiveRecord::Base
+class AccountableTransaction < ActiveRecord::Base
   has_one :debit
   has_one :credit
   has_one :credited_account, :through => :credit, :source => :detail_account

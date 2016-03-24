@@ -1,4 +1,4 @@
-class InvoicePayment < Transaction
+class InvoicePayment < AccountableTransaction
   validate :valid_invoice
 
   alias :invoice :auxilliary_model

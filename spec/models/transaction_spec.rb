@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Transaction do
+describe AccountableTransaction do
 
   subject { build(:transaction) }
 
@@ -51,5 +51,5 @@ describe Transaction do
 
   end
 
-	
+
 end
