@@ -74,8 +74,8 @@ private
 
   def self.get_accounts(entry)
     buyer = entry.detail_account
-    seller = entry.transaction.debited_account
-    seller = entry.transaction.credited_account if seller == buyer
+    seller = entry.accountable_transaction.debited_account
+    seller = entry.accountable_transaction.credited_account if seller == buyer
     {:seller => seller, :buyer => buyer}
   end
 

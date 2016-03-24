@@ -22,7 +22,7 @@ class CreateAccountableModels < ActiveRecord::Migration
     end
     add_index :balances, :account_id
 
-    create_table :transactions do |t|
+    create_table :accountable_transactions do |t|
       t.string :type
       t.string :description
       t.datetime :transaction_date
@@ -30,17 +30,17 @@ class CreateAccountableModels < ActiveRecord::Migration
       t.boolean :require_funds
       t.timestamps
     end
-    add_index :transactions, :transaction_date
-    add_index :transactions, [:auxilliary_model_id, :auxilliary_model_type], :name => :index_transactions_on_auxilliary_model
+    add_index :accountable_transactions, :transaction_date
+    add_index :accountable_transactions, [:auxilliary_model_id, :auxilliary_model_type], :name => :index_transactions_on_auxilliary_model
 
     create_table :entries do |t|
       t.string :type
       t.integer :detail_account_id, :references => :accounts
-      t.references :transaction
+      t.references :accountable_transaction
       t.decimal :amount, :precision => 14, :scale => 2
     end
     add_index :entries, :detail_account_id
-    add_index :entries, :transaction_id
+    add_index :entries, :accountable_transaction_id
 
     create_table :invoices do |t|
       t.integer :buyer_account_id, :references => :accounts
@@ -62,7 +62,7 @@ class CreateAccountableModels < ActiveRecord::Migration
     drop_table :invoice_lines
     drop_table :invoices
     drop_table :entries
-    drop_table :transactions
+    drop_table :accountable_transactions
     drop_table :balances
     drop_table :account_joins
     drop_table :accounts

@@ -6,9 +6,9 @@ describe BlankTransaction do
   let(:to){ create(:detail_account) }
 
   it "should exhibit the expected signature for use" do
-    lambda{ 
+    lambda{
       from.transfer(10.00).to(to, :description => "Test transfer")
-    }.should change(Transaction, :count).by(1)
+    }.should change(AccountableTransaction, :count).by(1)
   end
 
   it "should post the appropriate debit to the transfer source" do

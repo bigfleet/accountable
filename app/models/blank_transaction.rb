@@ -7,7 +7,7 @@ class BlankTransaction
   end
 
   def to(account_to, args = {})
-    Transaction.create(args.merge( 
+    AccountableTransaction.create(args.merge(
                   :account_from => @account_from,
                  :account_to => account_to,
                  :amount => @amount ))

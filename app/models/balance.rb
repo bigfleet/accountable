@@ -26,12 +26,11 @@ private
   end
 
   def entries
-    account.entries.find(:all, :conditions => entry_conditions,
-                                 :joins => :transaction)
+    account.entries.where(entry_conditions).joins(:accountable_transaction).all
   end
 
   def entry_conditions
-    column = "transactions.created_at"
+    column = "accountable_transactions.created_at"
     if previous
      ["#{column} > ? AND #{column} <= ?", previous.evaluated_at, evaluated_at]
     else

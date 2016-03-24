@@ -6,7 +6,7 @@ describe Debit do
 
   it { should be_valid }
 
-  let(:debit){ build(:debit) }  
+  let(:debit){ build(:debit) }
 
   describe "validations" do
 
@@ -17,12 +17,12 @@ describe Debit do
 
     it "must require an accompanying credit" do
       lambda {
-        debit.transaction.credit = nil
+        debit.accountable_transaction.credit = nil
       }.should raise_error(ActiveRecord::RecordNotSaved)
     end
 
     it "must require an encompassing transaction" do
-      debit.transaction = nil
+      debit.accountable_transaction = nil
       debit.should_not be_valid
     end
 
@@ -31,10 +31,10 @@ describe Debit do
       debit.should_not be_valid
     end
 
-  end  
+  end
 
   it "should be balanced by default" do
     debit.should be_balanced
   end
-	
+
 end

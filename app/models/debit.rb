@@ -1,6 +1,6 @@
 class Debit < Entry
   validate :sign_convention
-  has_one :credit, :through => :transaction
+  has_one :credit, :through => :accountable_transaction
 
   def sign_convention
     errors.add(:base, "Debit must be non-positive") unless amount <= 0
