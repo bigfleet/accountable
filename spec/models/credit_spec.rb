@@ -6,6 +6,7 @@ describe Credit do
 
   it { should be_valid }
 
+
   let(:credit){ build(:credit) }
 
   describe "validations" do
@@ -17,17 +18,17 @@ describe Credit do
 
     it "must require an accompanying debit" do
       lambda {
-        credit.transaction.debit = nil
+        credit.accountable_transaction.debit = nil
       }.should raise_error(ActiveRecord::RecordNotSaved)
     end
 
     it "must required accompanying a debit of identical amount" do
-      credit.transaction.debit.amount = -20.00
+      credit.accountable_transaction.debit.amount = -20.00
       credit.should_not be_valid
     end
 
     it "must require an encompassing transaction" do
-      credit.transaction = nil
+      credit.accountable_transaction = nil
       credit.should_not be_valid
     end
 
@@ -36,5 +37,5 @@ describe Credit do
       credit.should_not be_valid
     end
   end
-	
+
 end

@@ -1,4 +1,4 @@
-class Transaction < ActiveRecord::Base
+class AccountableTransaction < ActiveRecord::Base
   has_one :debit
   has_one :credit
   has_one :credited_account, :through => :credit, :source => :detail_account
@@ -11,7 +11,8 @@ class Transaction < ActiveRecord::Base
   attr_accessor :account_from, :account_to, :amount
 
   def completed?
-    !debit.nil? and !credit.nil?
+    !debit.nil? && !credit.nil? &&
+    debit.persisted? && credit.persisted?
   end
 
   def amount
@@ -34,18 +35,29 @@ class Transaction < ActiveRecord::Base
     !new_record?
   end
 
-private
-  def create
+
+  def self.record(args)
+    t = self.new(args)
     # Saving of debit, credit, and transaction should be done in one
     # atomic commit (the following block is an *SQL* transaction, not related
     # to our Transaction model)
     transaction do
-      super
-      create_debit :amount => -amount, :detail_account => account_from
-      create_credit :amount => amount, :detail_account => account_to
+      t.build_components
+      t.save
     end
-    completed?
+    t
   end
+
+  def build_components
+    build_debit :amount => -amount, :detail_account => account_from
+    build_credit :amount => amount, :detail_account => account_to
+  end
+
+private
+
+
+
+
 
   def sufficient_funds
     sufficient = account_from && account_from.current_balance.balance >= amount

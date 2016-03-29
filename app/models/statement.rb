@@ -9,7 +9,7 @@ class Statement
 
   def entries
     account.entries.where(entry_conditions).
-                    joins(:transaction).
+                    joins(:accountable_transaction).
                     order("created_at ASC")
   end
 
@@ -23,8 +23,8 @@ class Statement
 
 private
   def entry_conditions
-    column = "transactions.created_at"
-    ["#{column} > ? AND #{column} <= ?", period_start, period_end] 
+    column = "accountable_transactions.created_at"
+    ["#{column} > ? AND #{column} <= ?", period_start, period_end]
   end
 
 end

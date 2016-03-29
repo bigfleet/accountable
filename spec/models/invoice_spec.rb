@@ -23,13 +23,13 @@ describe Invoice do
   describe "building" do
 
     it "should be able to build an invoice successfully" do
-      lambda{ 
+      lambda{
         c = create(:credit)
-        i = Invoice.build([c]) 
+        i = Invoice.build([c])
         i.line_items.should have(1).things
         i.line_items.first.should == c
         i.buyer_account.should == c.detail_account
-        i.seller_account.should == c.transaction.debit.detail_account
+        i.seller_account.should == c.accountable_transaction.debit.detail_account
         i.should be_closed
       }.should change(Invoice, :count).by(1)
     end
@@ -45,7 +45,7 @@ describe Invoice do
   describe "net and payment calculations" do
 
     before(:each) do
-      t = create(:transaction)
+      t = create(:accountable_transaction)
       buyer, seller = t.debited_account, t.credited_account
       t2 = buyer.transfer(14.99).to(seller, :description => "Second item")
       @i = Invoice.build([t.credit, t2.credit])
@@ -72,7 +72,7 @@ describe Invoice do
   describe "paying" do
 
     before(:each) do
-      t = create(:transaction)
+      t = create(:accountable_transaction)
       buyer, seller = t.debited_account, t.credited_account
       t2 = buyer.transfer(14.99).to(seller, :description => "Second item")
       @i = Invoice.build([t.credit, t2.credit])

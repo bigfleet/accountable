@@ -9,7 +9,7 @@ class Credit < Entry
   end
 
   def debit
-    transaction ? transaction.debit : nil
+    accountable_transaction ? accountable_transaction.debit : nil
   end
 
   def require_debit

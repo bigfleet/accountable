@@ -29,20 +29,20 @@ describe Balance do
 
     it "should reflect a debit in the balance" do
       previous_balance = create(:balance, :evaluated_at => 1.day.ago)
-      create(:transaction, :account_from => previous_balance.account)
+      create(:accountable_transaction, :account_from => previous_balance.account)
       previous_balance.account.current_balance.balance.should be_within(0.001).of(90.0)
     end
 
     it "should reflect a credit in the balance" do
       previous_balance = create(:balance, :evaluated_at => 1.day.ago)
-      create(:transaction, :account_to => previous_balance.account)
+      create(:accountable_transaction, :account_to => previous_balance.account)
       previous_balance.account.current_balance.balance.should be_within(0.001).of(110.0)
     end
 
     it "should reflect multiple entries in the balance" do
       previous_balance = create(:balance, :evaluated_at => 1.day.ago)
-      create(:transaction, :account_to => previous_balance.account, :amount => 17.00)
-      create(:transaction, :account_from => previous_balance.account, :amount => 29.82)
+      create(:accountable_transaction, :account_to => previous_balance.account, :amount => 17.00)
+      create(:accountable_transaction, :account_from => previous_balance.account, :amount => 29.82)
       previous_balance.account.current_balance.balance.should be_within(0.001).of(87.18)
     end
 
@@ -51,5 +51,5 @@ describe Balance do
   it "should be read-only after persistance" do
     create(:balance).should be_readonly
   end
-	
+
 end

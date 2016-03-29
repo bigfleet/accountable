@@ -1,4 +1,4 @@
-class Account < ActiveRecord::Base 
+class Account < ActiveRecord::Base
 
   has_many :balances
   validate :no_direct_subclass
@@ -19,8 +19,7 @@ class Account < ActiveRecord::Base
   end
 
   def balance_before(date)
-    balances.find :first, :conditions => ["evaluated_at < ?", date],
-                          :order => "evaluated_at DESC"
+    balances.where("evaluated_at < ?", date).order("evaluated_at DESC").first
   end
 
   def current_balance
@@ -39,6 +38,6 @@ private
           "Use the DetailAccount or SummaryAccount class instead."
     known_classes = ["SummaryAccount", "DetailAccount"].include?(self.class.name)
     errors.add :base, msg unless known_classes
-  end  
-	
+  end
+
 end
