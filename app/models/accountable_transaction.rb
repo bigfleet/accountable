@@ -11,7 +11,8 @@ class AccountableTransaction < ActiveRecord::Base
   attr_accessor :account_from, :account_to, :amount
 
   def completed?
-    !debit.nil? and !credit.nil?
+    !debit.nil? && !credit.nil? &&
+    debit.persisted? && credit.persisted?
   end
 
   def amount
