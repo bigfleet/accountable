@@ -19,7 +19,7 @@ class Account < ActiveRecord::Base
   end
 
   def balance_before(date)
-    balances.where("evaluated_at > ?", date).order("evaluated_at DESC").first
+    balances.where("evaluated_at < ?", date).order("evaluated_at DESC").first
   end
 
   def current_balance

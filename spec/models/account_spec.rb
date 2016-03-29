@@ -17,7 +17,6 @@ describe DetailAccount do
   	end
 
     it "should be decremented with a debit", focus: true do
-      binding.pry
       detail_account.transfer(10.00).to(create(:detail_account), :description => "Test transfer")
       balance = detail_account.current_balance
       balance.should_not be_nil

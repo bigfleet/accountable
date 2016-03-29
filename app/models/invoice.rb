@@ -53,7 +53,7 @@ class Invoice < ActiveRecord::Base
                     :account_from => buyer_account,
                     :account_to => seller_account,
                     :amount => amount})
-    InvoicePayment.create! options
+    InvoicePayment.record options
   end
 
   def formatted_id
