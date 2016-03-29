@@ -16,7 +16,8 @@ describe DetailAccount do
       balance.balance.should == 0.0
   	end
 
-    it "should be decremented with a debit" do
+    it "should be decremented with a debit", focus: true do
+      binding.pry
       detail_account.transfer(10.00).to(create(:detail_account), :description => "Test transfer")
       balance = detail_account.current_balance
       balance.should_not be_nil
@@ -39,7 +40,7 @@ describe DetailAccount do
         @from = create(:detail_account)
         @to = create(:detail_account)
       end
-    
+
       it "should be decremented with a debit" do
        detail_account.transfer(10.00).to(create(:detail_account), :description => "Test transfer",
                                                                   :created_at => 1.week.ago)
@@ -69,7 +70,7 @@ describe DetailAccount do
 
     end
   end
-	
+
   describe "finding previous balances" do
 
     it "should find the most recent balance before a given date" do
@@ -93,5 +94,5 @@ describe SummaryAccount do
     sa.accounts << sa
     sa.should_not be_valid
   end
-	
+
 end

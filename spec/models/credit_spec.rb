@@ -11,12 +11,6 @@ describe Credit do
 
   describe "validations" do
 
-    it "should show me errors" do
-      credit.valid?
-      credit.errors.full_messages.should be_nil
-    end
-
-
     it "should not permit negative credits" do
       credit.amount = -11.00
       credit.should_not be_valid

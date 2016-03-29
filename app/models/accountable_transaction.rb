@@ -34,22 +34,27 @@ class AccountableTransaction < ActiveRecord::Base
     !new_record?
   end
 
+
+  def self.record(args)
+    t = self.new(args)
+    # Saving of debit, credit, and transaction should be done in one
+    # atomic commit (the following block is an *SQL* transaction, not related
+    # to our Transaction model)
+    transaction do
+      t.build_components
+      t.save
+    end
+    t
+  end
+
   def build_components
     build_debit :amount => -amount, :detail_account => account_from
     build_credit :amount => amount, :detail_account => account_to
   end
 
 private
-  def create
-    # Saving of debit, credit, and transaction should be done in one
-    # atomic commit (the following block is an *SQL* transaction, not related
-    # to our Transaction model)
-    transaction do
-      build_components
-      super
-    end
-    completed?
-  end
+
+
 
 
 
