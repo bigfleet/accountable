@@ -3,14 +3,15 @@ class Account < ActiveRecord::Base
   has_many :balances
   validate :no_direct_subclass
 
+  belongs_to :owner, :polymorphic => true
+  validate :check_owner_type
+
   class << self
     attr_accessor :owner_type
   end
 
   def self.owned_by(klass)
     @owner_type = klass.to_s.classify.constantize
-    belongs_to :owner, :polymorphic => true
-    validate :check_owner_type
   end
 
   def balance_at(date)
